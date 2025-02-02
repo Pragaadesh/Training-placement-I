@@ -1,0 +1,35 @@
+void inorder(struct TreeNode* root, char* pRetVal, int* returnSize) {
+    if (root == NULL) {
+        return;
+    }
+
+    snprintf(pRetVal + strlen(pRetVal), (*returnSize), "%d", root->val);
+
+    if (root->left != NULL) {
+        pRetVal[strlen(pRetVal)] = '(';
+        inorder(root->left, pRetVal, returnSize);
+        pRetVal[strlen(pRetVal)] = ')';
+    }
+
+    if (root->right != NULL) {
+        if (root->left == NULL) {
+            pRetVal[strlen(pRetVal)] = '(';
+            pRetVal[strlen(pRetVal)] = ')';
+        }
+
+        pRetVal[strlen(pRetVal)] = '(';
+        inorder(root->right, pRetVal, returnSize);
+        pRetVal[strlen(pRetVal)] = ')';
+    }
+}
+    int returnSize = 1e5;
+    pRetVal = (char*)calloc(returnSize, sizeof(char));
+    if (pRetVal == NULL) {
+        perror("calloc");
+        return pRetVal;
+    }
+    inorder(root, pRetVal, &returnSize);
+    pRetVal[strlen(pRetVal)] = '\0';
+
+    return pRetVal;
+}
