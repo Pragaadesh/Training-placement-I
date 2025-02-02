@@ -1,0 +1,25 @@
+int cmp(const void *a, const void *b){
+    return *(int*)a - *(int*)b;
+}
+int timso(int *nums,int n, int a, int b){
+    int  c = 0;
+    for(int i = 0; i < n; i++){
+        if(nums[i] == a || nums[i] == b) c++;
+    }
+    return c;
+}
+int findLHS(int* nums, int n) {
+    int c = 0, max = 0;
+    qsort(nums, n, sizeof(int), cmp);
+
+    for (int i = 0; i < n - 1; i++) {
+        if (nums[i + 1] - nums[i] == 1) {
+            int count = timso(nums, n, nums[i + 1], nums[i]);
+            if (count > max) {
+                max = count;
+            }
+        }
+    }
+
+    return max;
+}
