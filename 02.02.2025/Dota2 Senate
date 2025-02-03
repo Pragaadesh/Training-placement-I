@@ -1,0 +1,36 @@
+char* predictPartyVictory(char* senate) {
+    int radiantCount = 0, direCount = 0;
+    int radiantBan = 0, direBan = 0;
+
+    while (1) {
+        for (int i = 0; senate[i] !='\0'; i++) {
+            if (senate[i] == 'X') continue;
+
+            if (senate[i] == 'R') {
+                if (radiantBan > 0) {
+                    senate[i] = 'X';
+                    radiantBan--;
+                } else {
+                    direBan++;
+                }
+            } else if (senate[i] == 'D') {
+                if (direBan > 0) {
+                    senate[i] = 'X';
+                    direBan--;
+                } else {
+                    radiantBan++;
+                }
+            }
+        }
+
+        radiantCount = 0;
+        direCount = 0;
+        for (int i = 0; senate[i] !='\0'; i++) {
+            if (senate[i] == 'R') radiantCount++;
+            if (senate[i] == 'D') direCount++;
+        }
+
+        if (radiantCount == 0) return "Dire";
+        if (direCount == 0) return "Radiant";
+    }
+}
